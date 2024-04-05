@@ -7,7 +7,6 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
-    # DB
     postgres_user: str
     postgres_password: str
     postgres_host: str
@@ -17,6 +16,9 @@ class Settings(BaseSettings):
     eth_rpc: str = 'https://eth.drpc.org'
 
     notification_period: int = 10
+
+    tg_token: str
+    tg_chat_id: str
 
     @property
     def db_url(self):
