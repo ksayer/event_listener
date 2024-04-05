@@ -24,6 +24,7 @@ class TotalDistribution(Base, MethodManager):
     aix_distributed = mapped_column(DECIMAL(precision=100, scale=0), default=0, server_default='0')
     eth_bought = mapped_column(DECIMAL(precision=100, scale=0), default=0, server_default='0')
     eth_distributed = mapped_column(DECIMAL(precision=100, scale=0), default=0, server_default='0')
+    distributor: Mapped[str]
 
     created = mapped_column(
         DateTime(timezone=True), default=datetime.now, server_default=func.now()

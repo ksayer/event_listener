@@ -2,6 +2,7 @@ import json
 
 from web3 import Web3
 
+from core.settings import settings
 from services.listener import MonitoredEvent, EventListener
 from services.receiver import EventReceiver
 
@@ -20,6 +21,6 @@ def get_monitored_event():
 def monitor_total_distribution_events():
     listener = EventListener(
         monitored_event=get_monitored_event(),
-        rpc='https://eth.drpc.org',
+        rpc=settings.eth_rpc,
     )
     listener.run()

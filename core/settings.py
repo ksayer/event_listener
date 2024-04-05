@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     postgres_port: str
     postgres_db: str
 
+    eth_rpc: str = 'https://eth.drpc.org'
+
     notification_period: int = 10
 
     @property

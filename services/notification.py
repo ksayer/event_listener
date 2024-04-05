@@ -1,20 +1,14 @@
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 from typing import Protocol
 
 from core.settings import settings
-from database.models import NotificationDaemon, TotalDistribution
-from services.report import ReportService
+from database.models import NotificationDaemon
+from services.report import get_report
 
 
 class NotificationService(Protocol):
     def send_message(self, msg: str):
         ...
-
-
-def get_report() -> str:
-    created = datetime.now(tz=timezone.utc) - timedelta(hours=24)
-    distributions = TotalDistribution.filter_by_created(created)
-    return ReportService(distributions).create()
 
 
 class NotificationDistributor:

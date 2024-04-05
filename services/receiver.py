@@ -16,11 +16,13 @@ class EventReceiver:
     def save(self, event: EventData, w3: Web3):
         event_args = event.get('args')
         block = w3.eth.get_block(event['blockNumber'])
+        txn = w3.eth.get_transaction_receipt(event['transactionHash'])
         if event_args:
             TotalDistribution.create(
                 aix_processed=event_args['inputAixAmount'],
                 aix_distributed=event_args['distributedAixAmount'],
                 eth_bought=event_args['swappedEthAmount'],
                 eth_distributed=event_args['distributedEthAmount'],
-                created=datetime.fromtimestamp(block['timestamp'])
+                created=datetime.fromtimestamp(block['timestamp']),
+                distributor=txn['from'],
             )

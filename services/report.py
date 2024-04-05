@@ -1,6 +1,13 @@
 from datetime import datetime, timezone, timedelta
 
 from database.models import TotalDistribution
+from services.blockchain import get_eth_balance
+
+
+def get_report() -> str:
+    created = datetime.now(tz=timezone.utc) - timedelta(hours=24)
+    distributions = TotalDistribution.filter_by_created(created)
+    return ReportService(distributions).create()
 
 
 class ReportService:
@@ -24,9 +31,11 @@ class ReportService:
             self.eth_distributed += dist.eth_distributed
 
         self._fill_time(self.distributions[0].created, self.distributions[-1].created)
-        return self._create_message()
+        distributor = self.distributions[-1].distributor
+        distributor_balance = get_eth_balance(distributor)
+        return self._create_message(distributor, distributor_balance)
 
-    def _create_message(self):
+    def _create_message(self, distributor: str, distributor_balance: int):
         return f"""Daily $AIX Stats:
         - First TX: {self.first_tx}
         - Last TX: {self.last_tx}
@@ -34,6 +43,9 @@ class ReportService:
         - AIX distributed:  {self._format_number(self.aix_distributed)}
         - ETH bought:  {self._format_number(self.eth_bought)}
         - ETH distributed:  {self._format_number(self.eth_distributed)}
+        
+        Distributor wallet: {distributor}
+        Distributor balance: {self._format_number(distributor_balance)}
         """
 
     def _fill_time(self, first_txn: datetime, last_txn: datetime):
