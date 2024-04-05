@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     postgres_port: str
     postgres_db: str
 
+    notification_period: int = 10
+
     @property
     def db_url(self):
         return f'postgresql+psycopg2://{self.postgres_user}:{self.postgres_password}' \

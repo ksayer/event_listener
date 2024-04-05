@@ -36,9 +36,7 @@ class EventListener:
         EventDaemon.update_block(to_block)
 
     def _get_range_block(self) -> tuple[int, int]:
-        daemon = EventDaemon.get()
         current_block = self.w3.eth.block_number
-        if not daemon:
-            daemon = EventDaemon.create(last_checked_block=current_block - (24 * 60 * 6))
+        daemon = EventDaemon.get_or_create(current_block)
         start_block = daemon.last_checked_block + 1
         return start_block, current_block
