@@ -8,11 +8,11 @@ from services.receiver import EventReceiver
 
 
 def get_monitored_event():
-    with open('core/abi.json') as abi_file:
+    with open(settings.abi_file) as abi_file:
         monitored_event = MonitoredEvent(
-            contract_address=Web3.to_checksum_address("0xaBE235136562a5C2B02557E1CaE7E8c85F2a5da0"),
+            contract_address=Web3.to_checksum_address(settings.contract_address),
             abi=json.load(abi_file),
-            event_name='TotalDistribution',
+            event_name=settings.event_name,
             receiver=EventReceiver()
         )
     return monitored_event
