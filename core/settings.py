@@ -15,7 +15,7 @@ class Settings(BaseSettings):
 
     eth_rpc: str = 'https://eth.drpc.org'
 
-    notification_period: int = 10
+    notification_period: int = 60
 
     tg_token: str
     tg_chat_id: str
