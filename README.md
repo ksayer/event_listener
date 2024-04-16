@@ -10,6 +10,7 @@ By default, sends notification every 4h.
 
  - python 3.11
  - pip install -r requirements.txt
+ - alembic upgrade head
     
 Create `.env` file with next values:
 
